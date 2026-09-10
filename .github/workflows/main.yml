@@ -13,16 +13,20 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
+      - name: Baixar construtor oficial
+        run: docker pull ghcr.io/kivy/buildozer:latest
+
       - name: Gerar APK
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          command: buildozer android debug
-          workdir: .
-          buildozer_version: stable
+        run: |
+          docker run --rm \
+            -e APP_ANDROID_NDK=29 \
+            -v "${{ github.workspace }}:/home/user/hostcwd" \
+            ghcr.io/kivy/buildozer:latest \
+            android debug
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
           name: jogo-apk
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
+          if-no-files-found: error
