@@ -1,0 +1,28 @@
+name: Gerar APK Android
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Montar jogo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Gerar APK
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          workdir: .
+          buildozer_version: stable
+
+      - name: Disponibilizar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: jogo-apk
+          path: ${{ steps.buildozer.outputs.filename }}
