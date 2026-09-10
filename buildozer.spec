@@ -13,15 +13,16 @@ requirements = python3,pygame
 orientation = landscape
 fullscreen = 1
 
-android.api = 36
+android.api = 33
 android.minapi = 24
-android.ndk = 29
+android.api = 33
+android.ndk = 25b
 android.ndk_api = 24
 android.archs = arm64-v8a
 android.accept_sdk_license = True
 
 p4a.bootstrap = sdl2
-p4a.branch = develop
+p4a.branch = v2023.09.16
 
 [buildozer]
 
