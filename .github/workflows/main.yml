@@ -1,28 +1,32 @@
 name: Gerar APK Android
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
   build:
     name: Montar jogo
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
 
     steps:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
-      - name: Baixar construtor oficial
-        run: docker pull ghcr.io/kivy/buildozer:latest
+      - name: Usar Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Instalar ferramentas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf automake autopoint gettext libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo6 cmake libffi-dev libssl-dev
+          python -m pip install --upgrade pip
+          python -m pip install "buildozer==1.5.0" "Cython==0.29.34" "setuptools<70" virtualenv wheel
 
       - name: Gerar APK
-        run: |
-          docker run --rm \
-            -e APP_ANDROID_NDK=29 \
-            -v "${{ github.workspace }}:/home/user/hostcwd" \
-            ghcr.io/kivy/buildozer:latest \
-            android debug
+        run: buildozer android debug
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
