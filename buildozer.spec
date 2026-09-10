@@ -7,8 +7,10 @@ package.domain = com.ycaro
 source.dir = .
 source.include_exts = py,png,jpg,jpeg,webp,ogg,wav,mp3,ttf,json
 
-version = 0.1
+version = 0.2
 requirements = python3,pygame
+
+icon.filename = %(source.dir)s/icone.png
 
 orientation = landscape
 fullscreen = 1
