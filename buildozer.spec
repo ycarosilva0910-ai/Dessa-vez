@@ -1,6 +1,6 @@
 [app]
 
-title = Derrote o Gordo do Pai do Kayk
+title = Derrote o Colosso do Caos
 package.name = derroteogordo
 package.domain = com.ycaro
 
